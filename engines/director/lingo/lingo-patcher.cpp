@@ -41,6 +41,12 @@ struct ScriptPatch {
 	const char *orig;
 	const char *replace;
 } const scriptPatches[] = {
+	// The restore routine has no case for a game saved in the apartment transporter, even
+	// though that movie's own init handles arriving from a restored game (marker "Open").
+	// Without this the restore falls through and the main menu advances to its Quit frame.
+	{"jman", nullptr, kPlatformMacintosh, "Support Files:Mars ESG Upper 03", kMovieScript, 327, DEFAULT_CAST_LIB,
+			646, "else beep", "    else if themovie contains \"Apt Transporter\" then go to frame \"Open\" of movie gAptTransporter"},
+
 	// Garbage at end of script
 	{"warlock", nullptr, kPlatformMacintosh, "WARLOCKSHIP:UpForeECall", kScoreScript, 12, DEFAULT_CAST_LIB,
 			2, "SS Warlock:DATA:WARLOCKSHIP:Up.GCGunner", ""},
