@@ -42,6 +42,7 @@ Sprite::Sprite(Frame *frame) {
 	_matte = nullptr;
 	_puppet = false;
 	_autoPuppet = kAPNone; // Based on Director in a Nutshell, page 15
+	_puppetReleased = false;
 	_cast = nullptr;
 	reset();
 }
@@ -132,6 +133,7 @@ Sprite& Sprite::operator=(const Sprite &sprite) {
 	_editable = sprite._editable;
 	_puppet = sprite._puppet;
 	_autoPuppet = sprite._autoPuppet;
+	_puppetReleased = sprite._puppetReleased;
 	_immediate = sprite._immediate;
 	_backColor = sprite._backColor;
 	_foreColor = sprite._foreColor;
@@ -666,6 +668,13 @@ Common::String Sprite::formatInfo() {
 void Sprite::replaceFrom(Sprite *nextSprite) {
 	if (!nextSprite)
 		return;
+
+	if (_puppetReleased && !_puppet) {
+		// The channel went its own way while it was a puppet, so the score's
+		// per-frame deltas are not enough to bring it back in sync. Take everything.
+		nextSprite->_copyBackMask = static_cast<uint32>(kSCBNoMask);
+		_puppetReleased = false;
+	}
 
 	if (nextSprite->_copyBackMask & kSCBScriptId)
 		_scriptId = nextSprite->_scriptId;
