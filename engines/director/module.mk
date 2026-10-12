@@ -163,6 +163,7 @@ MODULE_OBJS = \
 	lingo/xlibs/r/remixxcmd.o \
 	lingo/xlibs/s/savenrestorexobj.o \
 	lingo/xlibs/s/serialportxobj.o \
+	lingo/xlibs/s/setglobalvolumexcmd.o \
 	lingo/xlibs/s/smallutil.o \
 	lingo/xlibs/s/soundjam.o \
 	lingo/xlibs/s/spacemgr.o \
