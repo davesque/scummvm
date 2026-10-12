@@ -490,6 +490,10 @@ void Channel::setCast(CastMemberID memberID) {
 			if (dv->loadVideoFromCast()) {
 				_movieTime = 0;
 				dv->setChannel(this);
+				// The channel may still hold the start/stop times of the previous
+				// video; left as is, the new video gets cut off at the old one's end.
+				_startTime = 0;
+				_stopTime = dv->getMovieTotalTime();
 				dv->startVideo();
 			}
 		} else if (_sprite->_cast->_type == kCastFilmLoop ||
