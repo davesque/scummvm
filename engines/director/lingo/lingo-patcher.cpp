@@ -250,6 +250,11 @@ struct ScriptPatch {
 			1, "Are you sure to cut off  KANJI Talk", ""},
 
 
+	// LOCAL MOD: skip the Presto and Journeyman logo animations and go straight to the
+	// main menu, using the same jump as the game's own Command-M shortcut (macro KeyToMain)
+	{"jman", nullptr, kPlatformMacintosh, "Support Files:Init Film", kScoreScript, 2, DEFAULT_CAST_LIB,
+			1, "set the keydownscript to \"KeyToMain\"", "go to label(\"MainMenu\") - 2"},
+
 	{nullptr, nullptr, kPlatformUnknown, nullptr, kNoneScript, 0, 0, 0, nullptr, nullptr}
 };
 
