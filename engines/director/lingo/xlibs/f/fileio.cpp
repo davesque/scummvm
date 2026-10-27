@@ -246,7 +246,10 @@ FileIOError FileObject::open(const Common::String &origpath, const Common::Strin
 
 	if (option.hasPrefix("?")) {
 		option = option.substr(1);
-		path = getFileNameFromModal(option.equalsIgnoreCase("write"), origpath, Common::String(), "txt");
+		// For "?read" the argument is a Mac file type such as "TEXT", not a file name,
+		// so it must not be offered as the default selection in the dialog
+		bool isRead = option.equalsIgnoreCase("read");
+		path = getFileNameFromModal(!isRead, isRead ? Common::String() : origpath, Common::String(), "txt");
 		if (path.empty()) {
 			return kErrorFileNotFound;
 		}
